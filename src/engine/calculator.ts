@@ -47,18 +47,28 @@ function applyOperation(
   rightOperand: number,
   operation: Operation,
 ): number | CalculatorError {
+  let result: number;
+
   switch (operation) {
     case 'add':
-      return leftOperand + rightOperand;
+      result = leftOperand + rightOperand;
+      break;
     case 'subtract':
-      return leftOperand - rightOperand;
+      result = leftOperand - rightOperand;
+      break;
     case 'multiply':
-      return leftOperand * rightOperand;
+      result = leftOperand * rightOperand;
+      break;
     case 'divide':
-      return rightOperand === 0
-        ? 'division-by-zero'
-        : leftOperand / rightOperand;
+      if (rightOperand === 0) {
+        return 'division-by-zero';
+      }
+
+      result = leftOperand / rightOperand;
+      break;
   }
+
+  return Number.isFinite(result) ? result : 'invalid-number';
 }
 
 export function inputDigit(

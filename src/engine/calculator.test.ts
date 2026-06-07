@@ -130,6 +130,23 @@ describe('calculator engine arithmetic', () => {
     expect(recovered.accumulatedValue).toBeNull();
     expect(recovered.pendingOperation).toBeNull();
   });
+
+  it('stores non-finite arithmetic results as invalid input', () => {
+    const state = calculatorReducer(
+      {
+        ...createInitialCalculatorState(),
+        accumulatedValue: Number.MAX_VALUE,
+        currentOperand: '2',
+        pendingOperation: 'multiply',
+      },
+      { type: 'evaluate' },
+    );
+
+    expect(state.currentOperand).toBe('Error');
+    expect(state.error).toBe('invalid-number');
+    expect(state.accumulatedValue).toBeNull();
+    expect(state.pendingOperation).toBeNull();
+  });
 });
 
 describe('calculator engine percentage and clear behavior', () => {
