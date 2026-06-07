@@ -240,6 +240,42 @@ export function evaluate(state: CalculatorState): CalculatorState {
   };
 }
 
+export function inputPercentage(state: CalculatorState): CalculatorState {
+  if (state.error) {
+    return state;
+  }
+
+  const currentValue = parseOperand(state.currentOperand);
+
+  if (currentValue === null) {
+    return withCalculationError('invalid-number');
+  }
+
+  return {
+    ...state,
+    currentOperand: formatResult(currentValue / 100),
+    shouldReplaceCurrentOperand: true,
+    error: null,
+  };
+}
+
+export function clearEntry(state: CalculatorState): CalculatorState {
+  if (state.error) {
+    return createInitialCalculatorState();
+  }
+
+  return {
+    ...state,
+    currentOperand: '0',
+    shouldReplaceCurrentOperand: false,
+    error: null,
+  };
+}
+
+export function clearAll(): CalculatorState {
+  return createInitialCalculatorState();
+}
+
 export function calculatorReducer(
   state: CalculatorState,
   action: CalculatorAction,
@@ -255,5 +291,11 @@ export function calculatorReducer(
       return selectOperation(state, action.operation);
     case 'evaluate':
       return evaluate(state);
+    case 'percentage':
+      return inputPercentage(state);
+    case 'clear-entry':
+      return clearEntry(state);
+    case 'clear-all':
+      return clearAll();
   }
 }
