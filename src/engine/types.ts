@@ -17,4 +17,7 @@ export type CalculatorAction =
   | { type: 'decimal' }
   | { type: 'toggle-sign' }
   | { type: 'operation'; operation: Operation }
-  | { type: 'evaluate' };
+  | { type: 'evaluate' }
+  | { type: 'percentage' }
+  | { type: 'clear-entry' }
+  | { type: 'clear-all' };
