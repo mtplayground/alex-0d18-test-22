@@ -32,4 +32,5 @@
 - `npm run dev` starts Vite on `0.0.0.0:8080`.
 - `npm run build` type-checks and writes the static production build to `dist/`.
 - The Vite build uses relative asset paths, so `dist/` can be served from a domain root or a subdirectory.
+- Vite preview is configured to allow the deployed Sprite and mctai hostnames used for this app.
 - Serve locally with `npm run preview` after building, or with any static file server such as `python3 -m http.server 8080 --directory dist`.
