@@ -1,55 +1,28 @@
 # Architecture Plan
 
-Product/repo: alex-0d18-test-22. No PRODUCT.md is present in the workspace, so this plan is based on the existing GitHub issue text and README.
+Product/repo: `alex-0d18-test-22`.
 
 ## Project Shape
 
-- Use a Vite React SPA with TypeScript.
-- Keep the app static-build friendly, with `npm run build` producing deployable files under `dist/`.
-- Organize source under `src/`:
-  - `src/App.tsx`: application container that owns calculator state and wires UI events to the engine.
-  - `src/main.tsx`: React entry point.
-  - `src/styles.css`: Tailwind base/imports and global app styles.
-  - `src/engine/calculator.ts`: pure calculator reducer/actions and arithmetic behavior.
-  - `src/engine/types.ts`: shared state, operation, action, and display status types.
-  - `src/engine/format.ts`: display formatting, precision trimming, and overflow-safe string helpers.
-  - `src/components/Display.tsx`: presentational display for current input/result/error.
-  - `src/components/Keypad.tsx`: responsive keypad emitting typed calculator actions.
-  - `src/test/` or colocated `*.test.ts`: unit tests for engine and formatting.
-  - `e2e/`: browser tests for full calculation flows after UI wiring.
+- The existing project is a static React/Vite calculator app.
+- Issue #23 is documentation/content-only: add `abc.md` at the repository root.
+- No application modules, build scripts, runtime services, database schema, or object-storage integration are needed.
 
-## Shared Types and State Model
+## File Organization
 
-- `Operation`: `"add" | "subtract" | "multiply" | "divide"`.
-- `CalculatorState`:
-  - `currentInput: string`: editable operand text, preserving decimal-entry intent.
-  - `accumulator: number | null`: committed left-hand value for chained evaluation.
-  - `pendingOperation: Operation | null`: operation waiting for the next operand.
-  - `overwriteInput: boolean`: next digit replaces result/current input after operation/evaluation.
-  - `error: string | null`: displayable error state, primarily division by zero.
-- `CalculatorAction`: typed actions for digit, decimal, operation, equals, sign toggle, percentage, clear entry, clear all, and keyboard-derived input.
-- Engine functions must be pure and deterministic so unit tests can cover behavior independently of React.
+- Add root file `abc.md`.
+- Keep existing source organization unchanged:
+  - `src/` for React UI and calculator logic.
+  - `e2e/` for browser tests.
+  - root config files for Vite, TypeScript, ESLint, Prettier, Vitest, and Playwright.
 
-## Issue Dependencies
+## Dependencies Between Issues
 
-- Issue #1 creates the Vite React TypeScript baseline and static build scripts.
-- Issue #2 adds Tailwind, ESLint, Prettier, and base styling on top of #1.
-- Issue #3 introduces the engine state model and entry actions after project structure exists.
-- Issue #4 builds arithmetic/evaluation on top of #3.
-- Issue #5 adds percentage and C/AC behavior once entry and arithmetic state are stable.
-- Issue #6 tests the completed engine behaviors from #3 through #5.
-- Issue #7 builds `Display` after styling is available.
-- Issue #8 builds `Keypad` after the React structure exists.
-- Issue #9 connects `App` to engine plus display/keypad and adds keyboard input.
-- Issue #10 adds end-to-end coverage after the UI is wired.
-- Issue #11 reviews error handling and verifies/document static production build.
+- There is only one issue in this batch.
+- Issue #23 has no dependency on application code or prior feature work beyond the repository existing.
 
 ## Key Design Decisions
 
-- Keep calculation logic out of React components. Components receive display data and emit typed actions.
-- Store current input as a string to avoid losing user intent during decimal entry, sign toggling, and trailing-zero input.
-- Evaluate chained operations left-to-right, matching the issue scope instead of implementing operator precedence.
-- Represent division by zero as an engine error state that the display can render without throwing.
-- Make `C` clear only the current entry when there is active input or pending state, and `AC` reset the full calculator state.
-- Use formatting only at the display boundary; keep engine numeric state unformatted.
-- Use Vitest and React Testing Library for unit/component tests, and Playwright for the full browser calculation flow.
+- Implement the issue as a minimal root-file addition.
+- Preserve the current calculator app architecture and tooling unchanged.
+- No tests or build changes are required for a static Markdown file containing fixed text.
