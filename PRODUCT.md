@@ -14,6 +14,7 @@
 
 ## Architecture
 
+- `abc.md` is a root-level Markdown file containing the single line `abc`.
 - `src/App.tsx` owns calculator state with `useReducer`, wires `Display` and `Keypad`, and registers keyboard input.
 - `src/engine/` contains the pure calculator state model, typed actions, reducer, and arithmetic behavior.
 - `src/components/Display.tsx` renders formatted calculator output with overflow-aware sizing.
